@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-// import { Router } from '@angular/router';
 import {
   ActionSheetController,
   ModalController,
@@ -17,7 +16,7 @@ import { PlacesService } from '../../places.service';
 })
 export class PlaceDetailPage implements OnInit {
   place: Place;
-  // constructor(private router: Router) {}
+
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
@@ -38,9 +37,6 @@ export class PlaceDetailPage implements OnInit {
   }
 
   onBookPlace() {
-    // this.router.navigateByUrl('/places/tabs/discover');
-    // this.navCtrl.navigateBack('/places/tabs/discover');
-    // this.navCtrl.pop();
     this.actionSheetCtrl
       .create({
         header: 'Choose an Action',
@@ -73,7 +69,7 @@ export class PlaceDetailPage implements OnInit {
     this.modalCtrl
       .create({
         component: CreateBookingComponent,
-        componentProps: { selectedPlace: this.place },
+        componentProps: { selectedPlace: this.place, selectedMode: mode },
       })
       .then((modalEl) => {
         modalEl.present();
