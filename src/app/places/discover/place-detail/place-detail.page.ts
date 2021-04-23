@@ -8,9 +8,10 @@ import {
   NavController,
 } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
-import { BookingService } from 'src/app/bookings/booking.service';
-import { CreateBookingComponent } from 'src/app/bookings/create-booking/create-booking.component';
+import { AuthService } from '../../../auth/auth.service';
+import { BookingService } from '../../../bookings/booking.service';
+import { CreateBookingComponent } from '../../../bookings/create-booking/create-booking.component';
+import { MapModalComponent } from '../../../shared/map-modal/map-modal.component';
 import { Place } from '../../place.model';
 import { PlacesService } from '../../places.service';
 
@@ -134,6 +135,23 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
             });
         }
       });
+  }
+
+  onShowFullMap() {
+    this.modalCtrl
+      .create({
+        component: MapModalComponent,
+        componentProps: {
+          center: {
+            lat: this.place.location.lat,
+            lng: this.place.location.lng,
+          },
+          selectable: false,
+          closeButtonText: 'Close',
+          title: this.place.location.address,
+        },
+      })
+      .then((modalEl) => modalEl.present());
   }
 
   ngOnDestroy() {
