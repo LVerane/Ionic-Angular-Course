@@ -84,20 +84,31 @@ export class PlacesService {
       );
   }
 
+  uploadImage(image: File) {
+    const uploadData = new FormData();
+    uploadData.append('image', image);
+
+    return this.http.post<{ imageUrl: string; imagePath: string }>(
+      'https://us-central1-ionic-angular-course-c336b.cloudfunctions.net/storeImage',
+      uploadData
+    );
+  }
+
   addPlace(
     title: string,
     description: string,
     price: number,
     availableFrom: Date,
     availableTo: Date,
-    location: PlaceLocation
+    location: PlaceLocation,
+    imageUrl: string
   ) {
     let generatedId: string;
     const newPlace = new Place(
       Math.random().toString(),
       title,
       description,
-      'https://dmn-dallas-news-prod.cdn.arcpublishing.com/resizer/ulplsEcGvCMbTt21dsACDdyo5ec=/1660x934/smart/filters:no_upscale()/cloudfront-us-east-1.images.arcpublishing.com/dmn/PVG7MWFISJC7ZF4V7IC6ILZL6U.jpg',
+      imageUrl,
       price,
       availableFrom,
       availableTo,
