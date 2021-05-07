@@ -8,7 +8,7 @@ import {
   NavController,
 } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { AuthService } from '../../../auth/auth.service';
 import { BookingService } from '../../../bookings/booking.service';
 import { CreateBookingComponent } from '../../../bookings/create-booking/create-booking.component';
@@ -50,6 +50,7 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
       let fetchedUserId: string;
       this.authService.userId
         .pipe(
+          take(1),
           switchMap((userId) => {
             if (!userId) {
               throw new Error('No user id found!');
@@ -113,7 +114,6 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
   }
 
   openBookingModal(mode: 'select' | 'random') {
-    console.log(mode);
     this.modalCtrl
       .create({
         component: CreateBookingComponent,
